@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vladi\\source\\DesafioVB\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C068D96D-5029-1B47-291E-12CE7000A8E0}|DesafioVB.UI\\DesafioVB.UI.vbproj|c:\\users\\vladi\\source\\desafiovb\\desafiovb.ui\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{C068D96D-5029-1B47-291E-12CE7000A8E0}|DesafioVB.UI\\DesafioVB.UI.vbproj|solutionrelative:desafiovb.ui\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6F0EA6A3-5F6C-4CFB-5074-8F037FCEFD61}|DesafioVB.Business\\DesafioVB.Business.vbproj|c:\\users\\vladi\\source\\desafiovb\\desafiovb.business\\class1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{6F0EA6A3-5F6C-4CFB-5074-8F037FCEFD61}|DesafioVB.Business\\DesafioVB.Business.vbproj|solutionrelative:desafiovb.business\\class1.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.vb",
+              "DocumentMoniker": "C:\\Users\\vladi\\source\\DesafioVB\\DesafioVB.UI\\Program.vb",
+              "RelativeDocumentMoniker": "DesafioVB.UI\\Program.vb",
+              "ToolTip": "C:\\Users\\vladi\\source\\DesafioVB\\DesafioVB.UI\\Program.vb",
+              "RelativeToolTip": "DesafioVB.UI\\Program.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-03-17T17:31:06.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Class1.vb",
+              "DocumentMoniker": "C:\\Users\\vladi\\source\\DesafioVB\\DesafioVB.Business\\Class1.vb",
+              "RelativeDocumentMoniker": "DesafioVB.Business\\Class1.vb",
+              "ToolTip": "C:\\Users\\vladi\\source\\DesafioVB\\DesafioVB.Business\\Class1.vb",
+              "RelativeToolTip": "DesafioVB.Business\\Class1.vb",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2025-03-17T17:19:07.174Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
