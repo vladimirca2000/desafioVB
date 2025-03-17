@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("DesafioVB.Entities"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+048713e3dc701ae830013ac2221fb588916ef8b9"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25963a901e326e8815a48dab04d4b25395a56fad"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("DesafioVB.Entities"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("DesafioVB.Entities"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")> 
