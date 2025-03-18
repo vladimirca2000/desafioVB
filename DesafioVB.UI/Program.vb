@@ -1,7 +1,6 @@
-﻿Imports Microsoft.EntityFrameworkCore
-Imports Microsoft.Extensions.DependencyInjection
+﻿Imports Microsoft.Extensions.DependencyInjection
 Imports Microsoft.Extensions.Hosting
-Imports DesafioVB.Data.DesafioVB.Data.Context
+Imports DesafioVB.Data
 
 Friend Module Program
 
@@ -13,10 +12,8 @@ Friend Module Program
         ' Connection String
         Dim connectionString As String = "Server=(localdb)\mssqllocaldb;Database=DataBaseXYZ;Trusted_Connection=True;"
 
-        ' Adiciona o DbContext ao container de DI
-        builder.Services.AddDbContext(Of XYZContext)(
-            Sub(options) options.UseSqlServer(connectionString)
-        )
+        ' Adiciona o repositório ao container de DI
+        builder.Services.AddSingleton(Of TransacaoRepository)(Function(provider) New TransacaoRepository(connectionString))
 
         ' Adiciona Form1 ao container de DI
         builder.Services.AddTransient(Of Form1)()
@@ -29,7 +26,7 @@ Friend Module Program
         Application.EnableVisualStyles()
         Application.SetCompatibleTextRenderingDefault(False)
 
-        ' Obtém uma instância de Form1 injetada com XYZContext
+        ' Obtém uma instância de Form1 injetada com TransacaoRepository
         Dim form1 = app.Services.GetRequiredService(Of Form1)()
         Application.Run(form1)
     End Sub

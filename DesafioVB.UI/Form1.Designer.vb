@@ -1,14 +1,13 @@
-﻿Imports DesafioVB.Data.DesafioVB.Data.Context
+﻿Imports DesafioVB.Data
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
+    Private ReadOnly _transacaoRepository As TransacaoRepository
 
-    Private ReadOnly _context As XYZContext
-
-    'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()>
-    Protected Overrides Sub Dispose(disposing As Boolean)
+    'Descartar substituições de formulário para limpar a lista de componentes.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
@@ -18,26 +17,34 @@ Partial Class Form1
         End Try
     End Sub
 
-    'Required by the Windows Form Designer
+    'Exigido pelo Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
+    'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
+    'Pode ser modificado usando o Windows Form Designer.  
+    'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
+        components = New System.ComponentModel.Container
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Text = "Form1"
     End Sub
 
-    Public Sub New(context As XYZContext)
+
+
+    ' Construtor que aceita TransacaoRepository como dependência
+    Public Sub New(transacaoRepository As TransacaoRepository)
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
 
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-        _context = context
+        _transacaoRepository = transacaoRepository
     End Sub
 
+    ' Exemplo de uso do repositório
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim transacoes = _transacaoRepository.GetAll()
+        ' Faça algo com as transações
+    End Sub
 End Class
