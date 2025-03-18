@@ -1,6 +1,10 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports DesafioVB.Data.DesafioVB.Data.Context
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
+
+    Private ReadOnly _context As XYZContext
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -26,6 +30,14 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Text = "Form1"
+    End Sub
+
+    Public Sub New(context As XYZContext)
+        ' Esta chamada é requerida pelo designer.
+        InitializeComponent()
+
+        ' Adicione qualquer inicialização após a chamada InitializeComponent().
+        _context = context
     End Sub
 
 End Class

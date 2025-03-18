@@ -10,6 +10,7 @@ Namespace DesafioVB.Entities.DTOs
 
         <Required(ErrorMessage:="O número do cartão é obrigatório.")>
         <StringLength(16, MinimumLength:=16, ErrorMessage:="O número do cartão deve ter 16 dígitos.")>
+        <RegularExpression("^[0-9]*$", ErrorMessage:="O número do cartão deve conter apenas números.")>
         Public Property NumeroCartao As String
 
         <Required(ErrorMessage:="O valor da transação é obrigatório.")>
