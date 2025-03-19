@@ -1,9 +1,12 @@
 ﻿Imports System
 Imports System.ComponentModel.DataAnnotations
 
-Namespace DesafioVB.Entities.DTOs
+Namespace DesafioVB.DTOs
 
-    Public Class CreateTransacaoDTO
+    Public Class UpdateTransacaoDTO
+
+        <Required(ErrorMessage:="O ID da transação é obrigatório.")>
+        Public Property IdTransacao As Integer
 
         <Required(ErrorMessage:="O número do cartão é obrigatório.")>
         <StringLength(16, MinimumLength:=16, ErrorMessage:="O número do cartão deve ter 16 dígitos.")>

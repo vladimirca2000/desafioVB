@@ -31,10 +31,4 @@ Namespace DesafioVB.Entities
         Public Property StatusTransacao As StatusTransacaoEnum
     End Class
 
-    Public Enum StatusTransacaoEnum
-        Aprovada
-        Pendente
-        Cancelada
-    End Enum
-
 End Namespace

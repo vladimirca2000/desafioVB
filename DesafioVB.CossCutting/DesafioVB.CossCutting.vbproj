@@ -5,4 +5,12 @@
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DesafioVB.Entities\DesafioVB.Entities.vbproj" />
+  </ItemGroup>
+
 </Project>

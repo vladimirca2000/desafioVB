@@ -1,10 +1,11 @@
 ﻿Imports Microsoft.Extensions.DependencyInjection
 Imports Microsoft.Extensions.Hosting
 Imports DesafioVB.Data
-Imports DesafioVB.Entities.Interfaces.Services
 Imports DesafioVB.Business.Services
 Imports DesafioVB.Entities.Interfaces.Repositories
 Imports DesafioVB.CossCutting.DesafioVB.Common
+Imports DesafioVB.Business.Interfaces.Services
+Imports DesafioVB.CossCutting
 
 Friend Module Program
 
@@ -25,6 +26,9 @@ Friend Module Program
 
         ' Adiciona Form1 ao container de DI
         builder.Services.AddTransient(Of Form1)()
+
+        ' Configurar mapeamentos
+        ConfiguracaoMapeamento.RegistrarMapeamentos()
 
         ' Compila o provedor de serviços
         Dim app = builder.Build()

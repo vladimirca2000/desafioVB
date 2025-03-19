@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace DesafioVB.Entities.DTOs
+Namespace DesafioVB.DTOs
 
     Public Class TransacaoFilterDTO
 

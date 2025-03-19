@@ -1,11 +1,9 @@
-﻿Imports System
-Imports System.ComponentModel.DataAnnotations
+﻿Imports System.ComponentModel.DataAnnotations
+Imports DesafioVB.Entities.DesafioVB.Entities
 
-Namespace DesafioVB.Entities.DTOs
+Namespace DesafioVB.DTOs
 
-    Public Class UpdateTransacaoDTO
-
-        <Required(ErrorMessage:="O ID da transação é obrigatório.")>
+    Public Class CreateTransacaoDTO
         Public Property IdTransacao As Integer
 
         <Required(ErrorMessage:="O número do cartão é obrigatório.")>
@@ -24,7 +22,7 @@ Namespace DesafioVB.Entities.DTOs
         Public Property Descricao As String
 
         <Required(ErrorMessage:="O status da transação é obrigatório.")>
-        Public Property StatusTransacao As String
+        Public Property StatusTransacao As StatusTransacaoEnum
 
     End Class
 

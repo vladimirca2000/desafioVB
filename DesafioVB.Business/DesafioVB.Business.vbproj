@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DesafioVB.CossCutting\DesafioVB.CossCutting.vbproj" />
     <ProjectReference Include="..\DesafioVB.Entities\DesafioVB.Entities.vbproj" />
   </ItemGroup>
 
