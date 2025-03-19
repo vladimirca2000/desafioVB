@@ -1,9 +1,9 @@
 ﻿Namespace DesafioVB.Entities
 
     Public Enum StatusTransacaoEnum
-        Pendente = 0
-        Aprovada = 1
-        Cancelada = 2
+        Pendente = 1
+        Aprovada = 2
+        Cancelada = 3
     End Enum
 
 End Namespace

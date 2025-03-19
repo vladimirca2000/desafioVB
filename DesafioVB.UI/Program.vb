@@ -6,6 +6,7 @@ Imports DesafioVB.Entities.Interfaces.Repositories
 Imports DesafioVB.CossCutting.DesafioVB.Common
 Imports DesafioVB.Business.Interfaces.Services
 Imports DesafioVB.CossCutting
+Imports Microsoft.Extensions.Logging
 
 Friend Module Program
 
@@ -30,6 +31,8 @@ Friend Module Program
         ' Configurar mapeamentos
         ConfiguracaoMapeamento.RegistrarMapeamentos()
 
+        'CreateHostBuilder().Build().Run()
+
         ' Compila o provedor de serviços
         Dim app = builder.Build()
 
@@ -42,5 +45,19 @@ Friend Module Program
         Dim form1 = app.Services.GetRequiredService(Of Form1)()
         Application.Run(form1)
     End Sub
+
+    Function CreateHostBuilder() As IHostBuilder
+        Return Host.CreateDefaultBuilder().
+            ConfigureServices(Sub(context, services)
+                                  services.AddTransient(Of ITransacaoService, TransacaoService)()
+                                  services.AddTransient(Of ITransacaoRepository, TransacaoRepository)()
+                                  ' Adicione outros serviços aqui
+                              End Sub).
+            ConfigureLogging(Sub(logging)
+                                 logging.ClearProviders()
+                                 logging.AddConsole()
+                                 ' Adicione outros provedores de log aqui
+                             End Sub)
+    End Function
 
 End Module

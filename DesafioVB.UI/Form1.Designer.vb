@@ -3,6 +3,7 @@ Imports DesafioVB.Business.Interfaces.Services
 Imports DesafioVB.Entities.DesafioVB.Entities
 Imports DesafioVB.CossCutting
 Imports DesafioVB.CossCutting.DesafioVB.Common
+Imports FluentValidation
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
@@ -50,12 +51,11 @@ Partial Class Form1
         btnDeletar = New Button()
         btnSalvar = New Button()
         dgvTransacoes = New DataGridView()
-        btnSelecionarFiltro = New Button()
         Panel3 = New Panel()
-        lblStatusTransacaoSelecionado = New Label()
-        lblValorTransacaoSelecionado = New Label()
-        lblDataTransacaoSelecionada = New Label()
-        lblFiltroCartaoSelecionado = New Label()
+        mtbFiltroData = New MaskedTextBox()
+        cmbFiltroStatus = New ComboBox()
+        nudFiltroValor = New NumericUpDown()
+        mtbFiltroCartao = New MaskedTextBox()
         Label12 = New Label()
         Label11 = New Label()
         Label10 = New Label()
@@ -67,11 +67,13 @@ Partial Class Form1
         NudPaginaca = New NumericUpDown()
         Label13 = New Label()
         Label14 = New Label()
+        Label15 = New Label()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         CType(nudValorTransacao, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvTransacoes, ComponentModel.ISupportInitialize).BeginInit()
         Panel3.SuspendLayout()
+        CType(nudFiltroValor, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(NudPaginaca, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -242,7 +244,7 @@ Partial Class Form1
         btnLimpar.Cursor = Cursors.Hand
         btnLimpar.Font = New Font("Segoe UI", 16.0F)
         btnLimpar.ForeColor = Color.Black
-        btnLimpar.Location = New Point(298, 525)
+        btnLimpar.Location = New Point(424, 525)
         btnLimpar.MaximumSize = New Size(100, 50)
         btnLimpar.MinimumSize = New Size(50, 0)
         btnLimpar.Name = "btnLimpar"
@@ -257,7 +259,7 @@ Partial Class Form1
         btnDeletar.Cursor = Cursors.Hand
         btnDeletar.Font = New Font("Segoe UI", 16.0F)
         btnDeletar.ForeColor = Color.White
-        btnDeletar.Location = New Point(173, 525)
+        btnDeletar.Location = New Point(234, 525)
         btnDeletar.MaximumSize = New Size(100, 50)
         btnDeletar.MinimumSize = New Size(50, 0)
         btnDeletar.Name = "btnDeletar"
@@ -288,82 +290,59 @@ Partial Class Form1
         dgvTransacoes.Name = "dgvTransacoes"
         dgvTransacoes.ReadOnly = True
         dgvTransacoes.Size = New Size(654, 411)
-        dgvTransacoes.TabIndex = 3
-        ' 
-        ' btnSelecionarFiltro
-        ' 
-        btnSelecionarFiltro.BackColor = Color.Blue
-        btnSelecionarFiltro.Cursor = Cursors.Hand
-        btnSelecionarFiltro.Font = New Font("Segoe UI", 16.0F)
-        btnSelecionarFiltro.ForeColor = Color.Transparent
-        btnSelecionarFiltro.Location = New Point(424, 525)
-        btnSelecionarFiltro.MaximumSize = New Size(100, 50)
-        btnSelecionarFiltro.MinimumSize = New Size(50, 0)
-        btnSelecionarFiltro.Name = "btnSelecionarFiltro"
-        btnSelecionarFiltro.Size = New Size(100, 46)
-        btnSelecionarFiltro.TabIndex = 8
-        btnSelecionarFiltro.Text = "Filtro"
-        btnSelecionarFiltro.UseVisualStyleBackColor = False
+        dgvTransacoes.TabIndex = 8
         ' 
         ' Panel3
         ' 
         Panel3.BorderStyle = BorderStyle.FixedSingle
-        Panel3.Controls.Add(lblStatusTransacaoSelecionado)
-        Panel3.Controls.Add(lblValorTransacaoSelecionado)
-        Panel3.Controls.Add(lblDataTransacaoSelecionada)
-        Panel3.Controls.Add(lblFiltroCartaoSelecionado)
+        Panel3.Controls.Add(mtbFiltroData)
+        Panel3.Controls.Add(cmbFiltroStatus)
+        Panel3.Controls.Add(nudFiltroValor)
+        Panel3.Controls.Add(mtbFiltroCartao)
         Panel3.Controls.Add(Label12)
         Panel3.Controls.Add(Label11)
         Panel3.Controls.Add(Label10)
         Panel3.Controls.Add(Label9)
-        Panel3.Location = New Point(565, 530)
+        Panel3.Location = New Point(565, 574)
         Panel3.Name = "Panel3"
         Panel3.Size = New Size(654, 74)
         Panel3.TabIndex = 19
         ' 
-        ' lblStatusTransacaoSelecionado
+        ' mtbFiltroData
         ' 
-        lblStatusTransacaoSelecionado.AutoSize = True
-        lblStatusTransacaoSelecionado.BorderStyle = BorderStyle.FixedSingle
-        lblStatusTransacaoSelecionado.Location = New Point(481, 37)
-        lblStatusTransacaoSelecionado.MaximumSize = New Size(150, 20)
-        lblStatusTransacaoSelecionado.MinimumSize = New Size(150, 20)
-        lblStatusTransacaoSelecionado.Name = "lblStatusTransacaoSelecionado"
-        lblStatusTransacaoSelecionado.Size = New Size(150, 20)
-        lblStatusTransacaoSelecionado.TabIndex = 7
+        mtbFiltroData.Location = New Point(145, 37)
+        mtbFiltroData.Mask = "00/00/0000"
+        mtbFiltroData.Name = "mtbFiltroData"
+        mtbFiltroData.Size = New Size(150, 23)
+        mtbFiltroData.TabIndex = 11
         ' 
-        ' lblValorTransacaoSelecionado
+        ' cmbFiltroStatus
         ' 
-        lblValorTransacaoSelecionado.AutoSize = True
-        lblValorTransacaoSelecionado.BorderStyle = BorderStyle.FixedSingle
-        lblValorTransacaoSelecionado.Location = New Point(481, 9)
-        lblValorTransacaoSelecionado.MaximumSize = New Size(150, 20)
-        lblValorTransacaoSelecionado.MinimumSize = New Size(150, 20)
-        lblValorTransacaoSelecionado.Name = "lblValorTransacaoSelecionado"
-        lblValorTransacaoSelecionado.Size = New Size(150, 20)
-        lblValorTransacaoSelecionado.TabIndex = 6
+        cmbFiltroStatus.FormattingEnabled = True
+        cmbFiltroStatus.Location = New Point(481, 38)
+        cmbFiltroStatus.Name = "cmbFiltroStatus"
+        cmbFiltroStatus.Size = New Size(150, 23)
+        cmbFiltroStatus.TabIndex = 12
         ' 
-        ' lblDataTransacaoSelecionada
+        ' nudFiltroValor
         ' 
-        lblDataTransacaoSelecionada.AutoSize = True
-        lblDataTransacaoSelecionada.BorderStyle = BorderStyle.FixedSingle
-        lblDataTransacaoSelecionada.Location = New Point(145, 35)
-        lblDataTransacaoSelecionada.MaximumSize = New Size(150, 20)
-        lblDataTransacaoSelecionada.MinimumSize = New Size(150, 20)
-        lblDataTransacaoSelecionada.Name = "lblDataTransacaoSelecionada"
-        lblDataTransacaoSelecionada.Size = New Size(150, 20)
-        lblDataTransacaoSelecionada.TabIndex = 5
+        nudFiltroValor.DecimalPlaces = 2
+        nudFiltroValor.Font = New Font("Segoe UI", 9.0F)
+        nudFiltroValor.Increment = New Decimal(New Integer() {1, 0, 0, 131072})
+        nudFiltroValor.Location = New Point(481, 7)
+        nudFiltroValor.Maximum = New Decimal(New Integer() {1410065407, 2, 0, 0})
+        nudFiltroValor.Name = "nudFiltroValor"
+        nudFiltroValor.Size = New Size(150, 23)
+        nudFiltroValor.TabIndex = 10
+        nudFiltroValor.TextAlign = HorizontalAlignment.Right
         ' 
-        ' lblFiltroCartaoSelecionado
+        ' mtbFiltroCartao
         ' 
-        lblFiltroCartaoSelecionado.AutoSize = True
-        lblFiltroCartaoSelecionado.BorderStyle = BorderStyle.FixedSingle
-        lblFiltroCartaoSelecionado.Location = New Point(145, 9)
-        lblFiltroCartaoSelecionado.MaximumSize = New Size(150, 20)
-        lblFiltroCartaoSelecionado.MinimumSize = New Size(150, 20)
-        lblFiltroCartaoSelecionado.Name = "lblFiltroCartaoSelecionado"
-        lblFiltroCartaoSelecionado.Size = New Size(150, 20)
-        lblFiltroCartaoSelecionado.TabIndex = 4
+        mtbFiltroCartao.Location = New Point(145, 6)
+        mtbFiltroCartao.Mask = "0000 0000 0000 0000"
+        mtbFiltroCartao.Name = "mtbFiltroCartao"
+        mtbFiltroCartao.Size = New Size(150, 23)
+        mtbFiltroCartao.TabIndex = 9
         ' 
         ' Label12
         ' 
@@ -442,12 +421,12 @@ Partial Class Form1
         BtnBuscarTransacoes.Cursor = Cursors.Hand
         BtnBuscarTransacoes.Font = New Font("Segoe UI", 16.0F)
         BtnBuscarTransacoes.ForeColor = Color.Transparent
-        BtnBuscarTransacoes.Location = New Point(1039, 610)
+        BtnBuscarTransacoes.Location = New Point(1039, 525)
         BtnBuscarTransacoes.MaximumSize = New Size(180, 38)
         BtnBuscarTransacoes.MinimumSize = New Size(180, 38)
         BtnBuscarTransacoes.Name = "BtnBuscarTransacoes"
         BtnBuscarTransacoes.Size = New Size(180, 38)
-        BtnBuscarTransacoes.TabIndex = 10
+        BtnBuscarTransacoes.TabIndex = 14
         BtnBuscarTransacoes.Text = "Buscar Dados"
         BtnBuscarTransacoes.TextAlign = ContentAlignment.TopCenter
         BtnBuscarTransacoes.UseVisualStyleBackColor = False
@@ -455,14 +434,14 @@ Partial Class Form1
         ' NudPaginaca
         ' 
         NudPaginaca.Font = New Font("Segoe UI", 16.0F)
-        NudPaginaca.Location = New Point(951, 611)
+        NudPaginaca.Location = New Point(963, 527)
         NudPaginaca.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         NudPaginaca.MaximumSize = New Size(70, 0)
         NudPaginaca.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         NudPaginaca.MinimumSize = New Size(70, 0)
         NudPaginaca.Name = "NudPaginaca"
         NudPaginaca.Size = New Size(70, 36)
-        NudPaginaca.TabIndex = 9
+        NudPaginaca.TabIndex = 13
         NudPaginaca.TextAlign = HorizontalAlignment.Center
         NudPaginaca.Value = New Decimal(New Integer() {1, 0, 0, 0})
         ' 
@@ -470,7 +449,7 @@ Partial Class Form1
         ' 
         Label13.AutoSize = True
         Label13.Font = New Font("Segoe UI", 16.0F)
-        Label13.Location = New Point(835, 613)
+        Label13.Location = New Point(847, 529)
         Label13.Name = "Label13"
         Label13.Size = New Size(110, 30)
         Label13.TabIndex = 23
@@ -485,6 +464,15 @@ Partial Class Form1
         Label14.TabIndex = 24
         Label14.Text = "Lista de Transações - Duplo clique para selecionar"
         ' 
+        ' Label15
+        ' 
+        Label15.AutoSize = True
+        Label15.Location = New Point(565, 556)
+        Label15.Name = "Label15"
+        Label15.Size = New Size(34, 15)
+        Label15.TabIndex = 25
+        Label15.Text = "Filtro"
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
@@ -492,6 +480,7 @@ Partial Class Form1
         AutoSize = True
         AutoSizeMode = AutoSizeMode.GrowAndShrink
         ClientSize = New Size(1264, 681)
+        Controls.Add(Label15)
         Controls.Add(Label14)
         Controls.Add(Label13)
         Controls.Add(NudPaginaca)
@@ -500,7 +489,6 @@ Partial Class Form1
         Controls.Add(Label7)
         Controls.Add(PictureBox1)
         Controls.Add(Panel3)
-        Controls.Add(btnSelecionarFiltro)
         Controls.Add(btnDeletar)
         Controls.Add(btnLimpar)
         Controls.Add(dgvTransacoes)
@@ -522,6 +510,7 @@ Partial Class Form1
         CType(dgvTransacoes, ComponentModel.ISupportInitialize).EndInit()
         Panel3.ResumeLayout(False)
         Panel3.PerformLayout()
+        CType(nudFiltroValor, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(NudPaginaca, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
@@ -544,6 +533,12 @@ Partial Class Form1
 
         cmbStatusTransacao.DataSource = StatusTransacaoEnum.GetNames(GetType(StatusTransacaoEnum))
 
+        ' Preencher o ComboBox cmbFiltroStatus com os nomes dos enums
+        cmbFiltroStatus.Items.Clear()
+        cmbFiltroStatus.Items.Add("") ' Adicionar item vazio
+        cmbFiltroStatus.Items.AddRange([Enum].GetNames(GetType(StatusTransacaoEnum)))
+        cmbFiltroStatus.SelectedIndex = 0 ' Deixar o item vazio selecionado
+
         AtualizarGrid()
 
         'Obter lista de transações com paginação e preencher o grid
@@ -552,9 +547,6 @@ Partial Class Form1
 
         ' Ocultar a coluna IdTransacao
         dgvTransacoes.Columns("IdTransacao").Visible = False
-
-
-
 
 
         ' Faça algo com as transações
@@ -577,7 +569,6 @@ Partial Class Form1
     Friend WithEvents btnDeletar As Button
     Friend WithEvents btnSalvar As Button
     Friend WithEvents cmbStatusTransacao As ComboBox
-    Friend WithEvents btnSelecionarFiltro As Button
     Friend WithEvents TextBox4 As TextBox
     Friend WithEvents Panel3 As Panel
     Friend WithEvents PictureBox1 As PictureBox
@@ -587,11 +578,9 @@ Partial Class Form1
     Friend WithEvents Label9 As Label
     Friend WithEvents Label11 As Label
     Friend WithEvents Label10 As Label
-    Friend WithEvents lblFiltroCartaoSelecionado As Label
     Friend WithEvents Label12 As Label
     Friend WithEvents lblStatusTransacaoSelecionado As Label
     Friend WithEvents lblValorTransacaoSelecionado As Label
-    Friend WithEvents lblDataTransacaoSelecionada As Label
     Friend WithEvents nudValorTransacao As NumericUpDown
     Friend WithEvents mtbNumeroCartao As MaskedTextBox
     Friend WithEvents NudPaginaca As NumericUpDown
@@ -687,6 +676,11 @@ Partial Class Form1
         LimparCampos()
         AtualizarGrid()
 
+        mtbFiltroCartao.Text = ""
+        mtbFiltroData.Text = ""
+        cmbFiltroStatus.SelectedIndex = 0
+        nudFiltroValor.Value = 0
+
     End Sub
 
     Private Sub btnDeletar_Click(sender As Object, e As EventArgs) Handles btnDeletar.Click
@@ -703,6 +697,33 @@ Partial Class Form1
             LimparCampos()
             AtualizarGrid()
         End If
+
+    End Sub
+    Friend WithEvents mtbFiltroCartao As MaskedTextBox
+    Friend WithEvents cmbFiltroStatus As ComboBox
+    Friend WithEvents nudFiltroValor As NumericUpDown
+    Friend WithEvents mtbFiltroData As MaskedTextBox
+    Friend WithEvents Label15 As Label
+
+    Private Sub BtnBuscarTransacoes_Click(sender As Object, e As EventArgs) Handles BtnBuscarTransacoes.Click
+        Dim validator = New TransacaoFilterDTOValidator()
+        Dim transacaoFiltro = validator.ValidarFiltros(mtbFiltroData.Text, nudFiltroValor.Value.ToString(), cmbFiltroStatus.Text, mtbFiltroCartao.Text)
+
+        If transacaoFiltro Is Nothing Then
+            ' Proceder sem filtros
+            MsgBox("Nenhum filtro aplicado. Procedendo sem filtros.", MsgBoxStyle.Information, "Informação")
+            ' Adicione a lógica para buscar todas as transações sem filtros
+            Dim transacoes = _transacaoService.GetAllPaginado(NudPaginaca.Value, 10)
+            dgvTransacoes.DataSource = transacoes
+            Return
+        Else
+            ' Proceder com filtros
+
+        End If
+
+
+
+
 
     End Sub
 End Class
