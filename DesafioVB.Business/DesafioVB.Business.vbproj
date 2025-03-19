@@ -5,4 +5,8 @@
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DesafioVB.Entities\DesafioVB.Entities.vbproj" />
+  </ItemGroup>
+
 </Project>

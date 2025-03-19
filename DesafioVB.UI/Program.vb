@@ -1,6 +1,10 @@
 ﻿Imports Microsoft.Extensions.DependencyInjection
 Imports Microsoft.Extensions.Hosting
 Imports DesafioVB.Data
+Imports DesafioVB.Entities.Interfaces.Services
+Imports DesafioVB.Business.Services
+Imports DesafioVB.Entities.Interfaces.Repositories
+Imports DesafioVB.CossCutting.DesafioVB.Common
 
 Friend Module Program
 
@@ -12,8 +16,12 @@ Friend Module Program
         ' Connection String
         Dim connectionString As String = "Server=(localdb)\mssqllocaldb;Database=DataBaseXYZ;Trusted_Connection=True;"
 
-        ' Adiciona o repositório ao container de DI
-        builder.Services.AddSingleton(Of TransacaoRepository)(Function(provider) New TransacaoRepository(connectionString))
+        ' Adiciona a configuração da connection string ao container de DI
+        builder.Services.Configure(Of DatabaseSettings)(Sub(options) options.ConnectionString = connectionString)
+
+        ' Adiciona o serviço ao container de DI
+        builder.Services.AddTransient(Of ITransacaoService, TransacaoService)()
+        builder.Services.AddTransient(Of ITransacaoRepository, TransacaoRepository)()
 
         ' Adiciona Form1 ao container de DI
         builder.Services.AddTransient(Of Form1)()

@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Infra", "04-Infra", "{9D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Apresentacao", "01-Apresentacao", "{9E2D88CA-940C-4F0C-B7D9-8C1E3A245A62}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-Common", "05-Common", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DesafioVB.CossCutting", "DesafioVB.CossCutting\DesafioVB.CossCutting.vbproj", "{2674E459-C8BC-4643-829D-C77C5485C460}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,10 @@ Global
 		{6F0EA6A3-5F6C-4CFB-5074-8F037FCEFD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F0EA6A3-5F6C-4CFB-5074-8F037FCEFD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F0EA6A3-5F6C-4CFB-5074-8F037FCEFD61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2674E459-C8BC-4643-829D-C77C5485C460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2674E459-C8BC-4643-829D-C77C5485C460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2674E459-C8BC-4643-829D-C77C5485C460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2674E459-C8BC-4643-829D-C77C5485C460}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +61,7 @@ Global
 		{846E95C9-8BAC-73E0-C324-7132B3F62E96} = {1DE5E398-5187-44CD-953C-B25AEEBDBC54}
 		{2F7FF445-B11D-E7F5-57C0-08BBD8409BF2} = {9D21D92D-D858-40FA-8A0F-539546499214}
 		{6F0EA6A3-5F6C-4CFB-5074-8F037FCEFD61} = {37674219-2EC4-4954-9D7D-7FB2572207B5}
+		{2674E459-C8BC-4643-829D-C77C5485C460} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F331E4C-0927-4DCB-83FB-37BC11D5E968}

@@ -5,9 +5,8 @@
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Intefaces\Repositories\" />
-    <Folder Include="Intefaces\Servises\" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Folder Include="Interfaces\Repositories\" />
+		<Folder Include="Interfaces\Services\" />
+	</ItemGroup>
 </Project>
