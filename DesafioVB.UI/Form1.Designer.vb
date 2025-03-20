@@ -4,6 +4,9 @@ Imports DesafioVB.Entities.DesafioVB.Entities
 Imports DesafioVB.CossCutting
 Imports DesafioVB.CossCutting.DesafioVB.Common
 Imports FluentValidation
+Imports DesafioVB.Entities.Notifications
+Imports DesafioVB.Business.Services
+Imports Microsoft.Extensions.Logging
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
@@ -517,15 +520,14 @@ Partial Class Form1
         PerformLayout()
     End Sub
 
-
-
     ' Construtor que aceita TransacaoRepository como dependência
-    Public Sub New(transacaoService As ITransacaoService)
+    Public Sub New(transacaoService As ITransacaoService, logger As ILogger(Of TransacaoService))
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
 
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
-        _transacaoService = transacaoService
+        Dim notification As INotification = New MessageBoxNotification()
+        _transacaoService = New TransacaoService(transacaoService, logger, notification)
     End Sub
 
     ' Exemplo de uso do repositório
@@ -726,4 +728,6 @@ Partial Class Form1
 
 
     End Sub
+
+
 End Class
