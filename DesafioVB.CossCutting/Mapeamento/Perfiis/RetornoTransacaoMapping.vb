@@ -1,6 +1,6 @@
 ﻿Imports Mapster
 Imports DesafioVB.Entities.DesafioVB.Entities
-Imports DesafioVB.CossCutting.DesafioVB.DTOs
+Imports DesafioVB.Entities
 
 Public Class RetornoTransacaoMapping
     Public Shared Sub Configurar()

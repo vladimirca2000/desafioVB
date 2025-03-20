@@ -1,11 +1,11 @@
 ﻿Imports Mapster
 Imports DesafioVB.Entities.DesafioVB.Entities
-Imports DesafioVB.CossCutting.DesafioVB.DTOs
+Imports DesafioVB.Entities
 
 Public Class TransacaoMapping
     Public Shared Sub Configurar()
         ' Configuração do mapeamento de Transacao para CreateTransacaoDTO
-        TypeAdapterConfig(Of Transacao, CreateTransacaoDTO) _
+        TypeAdapterConfig(Of Transacao, InputTransacaoDTO) _
             .NewConfig() _
             .Map(Function(dest) dest.IdTransacao, Function(src) src.IdTransacao) _
             .Map(Function(dest) dest.ValorTransacao, Function(src) src.ValorTransacao) _
@@ -14,7 +14,7 @@ Public Class TransacaoMapping
             .Map(Function(dest) dest.StatusTransacao, Function(src) src.StatusTransacao)
 
         ' Configuração inversa (CreateTransacaoDTO para Transacao)
-        TypeAdapterConfig(Of CreateTransacaoDTO, Transacao) _
+        TypeAdapterConfig(Of InputTransacaoDTO, Transacao) _
             .NewConfig() _
             .Map(Function(dest) dest.IdTransacao, Function(src) src.IdTransacao) _
             .Map(Function(dest) dest.NumeroCartao, Function(src) src.NumeroCartao) _

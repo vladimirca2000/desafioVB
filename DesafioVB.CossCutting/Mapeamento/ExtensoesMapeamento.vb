@@ -1,5 +1,4 @@
 ﻿Imports Mapster
-Imports DesafioVB.CossCutting.DesafioVB.DTOs
 Imports DesafioVB.Entities.DesafioVB.Entities
 
 Public Module ExtensoesMapeamento

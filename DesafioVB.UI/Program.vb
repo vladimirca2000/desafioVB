@@ -7,6 +7,7 @@ Imports DesafioVB.CossCutting.DesafioVB.Common
 Imports DesafioVB.Business.Interfaces.Services
 Imports DesafioVB.CossCutting
 Imports Microsoft.Extensions.Logging
+Imports DesafioVB.Entities.Notifications
 
 Friend Module Program
 
@@ -24,6 +25,10 @@ Friend Module Program
         ' Adiciona o serviço ao container de DI
         builder.Services.AddTransient(Of ITransacaoService, TransacaoService)()
         builder.Services.AddTransient(Of ITransacaoRepository, TransacaoRepository)()
+        builder.Services.AddScoped(Of INotification, MessageBoxNotification)()
+
+        builder.Services.AddLogging()
+
 
         ' Adiciona Form1 ao container de DI
         builder.Services.AddTransient(Of Form1)()
@@ -41,23 +46,27 @@ Friend Module Program
         Application.EnableVisualStyles()
         Application.SetCompatibleTextRenderingDefault(False)
 
-        ' Obtém uma instância de Form1 injetada com TransacaoRepository
+        'Obtém uma instância de Form1 injetada com TransacaoRepository
         Dim form1 = app.Services.GetRequiredService(Of Form1)()
         Application.Run(form1)
+
+
+        ' Obtém uma instância de Form1 injetada com TransacaoRepository
+        'Application.Run(app.Services.GetRequiredService(Of Form1)())
     End Sub
 
-    Function CreateHostBuilder() As IHostBuilder
-        Return Host.CreateDefaultBuilder().
-            ConfigureServices(Sub(context, services)
-                                  services.AddTransient(Of ITransacaoService, TransacaoService)()
-                                  services.AddTransient(Of ITransacaoRepository, TransacaoRepository)()
-                                  ' Adicione outros serviços aqui
-                              End Sub).
-            ConfigureLogging(Sub(logging)
-                                 logging.ClearProviders()
-                                 logging.AddConsole()
-                                 ' Adicione outros provedores de log aqui
-                             End Sub)
-    End Function
+    'Function CreateHostBuilder() As IHostBuilder
+    '    Return Host.CreateDefaultBuilder().
+    '        ConfigureServices(Sub(context, services)
+    '                              services.AddTransient(Of ITransacaoService, TransacaoService)()
+    '                              services.AddTransient(Of ITransacaoRepository, TransacaoRepository)()
+    '                              ' Adicione outros serviços aqui
+    '                          End Sub).
+    '        ConfigureLogging(Sub(logging)
+    '                             logging.ClearProviders()
+    '                             logging.AddConsole()
+    '                             ' Adicione outros provedores de log aqui
+    '                         End Sub)
+    'End Function
 
 End Module

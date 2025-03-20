@@ -1,5 +1,4 @@
-﻿Imports DesafioVB.CossCutting.DesafioVB.DTOs
-Imports DesafioVB.Business.Interfaces.Services
+﻿Imports DesafioVB.Business.Interfaces.Services
 Imports DesafioVB.Entities.DesafioVB.Entities
 Imports DesafioVB.CossCutting
 Imports DesafioVB.CossCutting.DesafioVB.Common
@@ -7,12 +6,15 @@ Imports FluentValidation
 Imports DesafioVB.Entities.Notifications
 Imports DesafioVB.Business.Services
 Imports Microsoft.Extensions.Logging
+Imports DesafioVB.Entities.Interfaces.Repositories
+Imports DesafioVB.Entities
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     Private ReadOnly _transacaoService As ITransacaoService
+    'Private ReadOnly transacaoRepository As ITransacaoRepository
 
     'Descartar substituições de formulário para limpar a lista de componentes.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -525,9 +527,11 @@ Partial Class Form1
         ' Esta chamada é requerida pelo designer.
         InitializeComponent()
 
+
         ' Adicione qualquer inicialização após a chamada InitializeComponent().
         Dim notification As INotification = New MessageBoxNotification()
-        _transacaoService = New TransacaoService(transacaoService, logger, notification)
+        _transacaoService = transacaoService
+        '_transacaoService = New TransacaoService(transacaoRepository, logger, notification)
     End Sub
 
     ' Exemplo de uso do repositório
@@ -591,23 +595,30 @@ Partial Class Form1
 
         'instanciar os DTOs de create e update
 
-
-
         If String.IsNullOrEmpty(TxtIdTransacao.Text) Then
             ' Adicionar nova transação
             Dim numeroCartaoSemEspacos = mtbNumeroCartao.Text.Replace(" ", "")
             Dim statusTransacaoEnum As StatusTransacaoEnum = CType([Enum].Parse(GetType(StatusTransacaoEnum), cmbStatusTransacao.Text), StatusTransacaoEnum)
-            Dim createTransacao As New CreateTransacaoDTO With {
+            Dim createTransacao As New InputTransacaoDTO With {
             .NumeroCartao = numeroCartaoSemEspacos,
             .ValorTransacao = nudValorTransacao.Value,
             .DataTransacao = dtpDataTransacao.Value,
             .Descricao = txtDescricaoTransacao.Text,
             .StatusTransacao = statusTransacaoEnum
-}
+            }
+
+            Dim validator = New TransacaoFilterDTOValidator()
+            Dim results = validator.Validate(createTransacao)
+
+            If Not results.IsValid Then
+                Dim validationErrors = String.Join(Environment.NewLine, results.Errors.Select(Function(err) err.ErrorMessage))
+                MessageBox.Show(validationErrors, "Erros de Validação", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
 
             _transacaoService.Add(createTransacao)
 
-            MsgBox("Transação adicionada com sucesso!", MsgBoxStyle.Information, "Sucesso")
+            'MsgBox("Transação adicionada com sucesso!", MsgBoxStyle.Information, "Sucesso")
 
             LimparCampos()
             AtualizarGrid()
@@ -615,7 +626,7 @@ Partial Class Form1
             ' Atualizar transação existente
             Dim numeroCartaoSemEspacos = mtbNumeroCartao.Text.Replace(" ", "")
             Dim statusTransacaoEnum As StatusTransacaoEnum = CType([Enum].Parse(GetType(StatusTransacaoEnum), cmbStatusTransacao.Text), StatusTransacaoEnum)
-            Dim updateTransacao As New UpdateTransacaoDTO With {
+            Dim updateTransacao As New InputTransacaoDTO With {
             .IdTransacao = Integer.Parse(TxtIdTransacao.Text),
             .NumeroCartao = numeroCartaoSemEspacos,
             .ValorTransacao = nudValorTransacao.Value,
@@ -624,9 +635,18 @@ Partial Class Form1
             .StatusTransacao = statusTransacaoEnum
             }
 
+            Dim validator = New TransacaoFilterDTOValidator()
+            Dim results = validator.Validate(updateTransacao)
+
+            If Not results.IsValid Then
+                Dim validationErrors = String.Join(Environment.NewLine, results.Errors.Select(Function(err) err.ErrorMessage))
+                MessageBox.Show(validationErrors, "Erros de Validação", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+
             _transacaoService.Update(updateTransacao)
 
-            MsgBox("Transação atualizada com sucesso!", MsgBoxStyle.Information, "Sucesso")
+            'MsgBox("Transação atualizada com sucesso!", MsgBoxStyle.Information, "Sucesso")
             LimparCampos()
             AtualizarGrid()
         End If
