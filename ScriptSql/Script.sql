@@ -13,7 +13,7 @@ CREATE TABLE Transacoes (
     Id_Transacao INT IDENTITY(1,1) PRIMARY KEY,
     Numero_Cartao CHAR(16) NOT NULL,
     Valor_Transacao DECIMAL(18,2) CHECK (Valor_Transacao > 0),
-    Data_Transacao DATETIME NOT NULL DEFAULT GETDATE(),
+    Data_Transacao DATE NOT NULL DEFAULT GETDATE(),
     Descricao VARCHAR(255),
     Status_Transacao VARCHAR(20) CHECK (Status_Transacao IN ('Aprovada', 'Pendente', 'Cancelada'))
 );

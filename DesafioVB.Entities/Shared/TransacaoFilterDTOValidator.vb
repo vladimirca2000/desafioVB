@@ -69,11 +69,11 @@ Public Class TransacaoFilterDTOValidator
 
         ' Retornar o TransacaoFilterDTO
         Return New TransacaoFilterDTO With {
-        .DataTransacao = If(dataTransacao = DateTime.MinValue, Nothing, dataTransacao),
-        .ValorTransacao = valorTransacao,
-        .StatusTransacao = statusTransacao,
-        .NumeroCartao = numeroCartaoLimpo
-    }
+            .DataTransacao = If(dataTransacao = DateTime.MinValue, Nothing, dataTransacao),
+            .ValorTransacao = valorTransacao,
+            .StatusTransacao = If(statusTransacao.HasValue, statusTransacao.Value, Nothing),
+            .NumeroCartao = numeroCartaoLimpo
+        }
     End Function
 
     Public Overloads Function Validate(createTransacao As InputTransacaoDTO) As ValidationResult

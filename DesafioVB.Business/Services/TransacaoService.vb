@@ -14,6 +14,8 @@ Namespace Services
         Private ReadOnly _logger As ILogger(Of TransacaoService)
         Private ReadOnly _notification As INotification
 
+
+
         Public Sub New(transacaoRepository As ITransacaoRepository, logger As ILogger(Of TransacaoService), notification As INotification)
             _transacaoRepository = transacaoRepository
             _logger = logger
@@ -159,6 +161,22 @@ Namespace Services
             Catch ex As Exception
                 _logger.LogError(ex, $"Erro ao buscar transações paginadas. Página: {pagina}, Quantidade: {quantidade}.", pagina, quantidade)
                 _notification.Notify($"Erro ao buscar transações paginadas. Página: {pagina}, Quantidade: {quantidade}.")
+                Throw
+            End Try
+        End Function
+
+        Public Function GetByFilters(dataTransacao As Date?, valorTransacao As Decimal?, statusTransacao As StatusTransacaoEnum?, numeroCartao As String, pagina As Integer, quantidade As Integer) As IEnumerable(Of Transacao) Implements ITransacaoService.GetByFilters
+            Try
+                _logger.LogInformation("Iniciando a busca de transações com filtros.")
+
+                ' Chamar o repositório para buscar as transações com os filtros aplicados
+                Dim transacoes = _transacaoRepository.GetByFilters(dataTransacao, valorTransacao, statusTransacao, numeroCartao, pagina, quantidade)
+
+                _logger.LogInformation("Busca de transações com filtros concluída com sucesso.")
+                Return transacoes
+            Catch ex As Exception
+                _logger.LogError(ex, "Erro ao buscar transações com filtros.")
+                _notification.Notify("Erro ao buscar transações com filtros.")
                 Throw
             End Try
         End Function

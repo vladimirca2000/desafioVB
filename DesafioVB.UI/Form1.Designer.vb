@@ -740,7 +740,32 @@ Partial Class Form1
             Return
         Else
             ' Proceder com filtros
+            Dim dataTransacao As DateTime? = Nothing
+            If Not String.IsNullOrWhiteSpace(mtbFiltroData.Text) AndAlso mtbFiltroData.Text <> "  /  /" Then
+                If DateTime.TryParseExact(mtbFiltroData.Text, "dd/MM/yyyy", Nothing, Globalization.DateTimeStyles.None, Nothing) Then
+                    dataTransacao = DateTime.ParseExact(mtbFiltroData.Text, "dd/MM/yyyy", Nothing)
+                Else
+                    MsgBox("Data inválida. Por favor, insira uma data no formato dd/MM/yyyy.", MsgBoxStyle.Exclamation, "Erro")
+                    Return
+                End If
+            End If
 
+
+
+            Dim valorTransacao As Decimal? = Nothing
+            If nudFiltroValor.Value > 0 Then
+                valorTransacao = nudFiltroValor.Value
+            End If
+
+            Dim statusTransacao As StatusTransacaoEnum? = Nothing
+            If Not String.IsNullOrEmpty(cmbFiltroStatus.Text) Then
+                statusTransacao = CType([Enum].Parse(GetType(StatusTransacaoEnum), cmbFiltroStatus.Text), StatusTransacaoEnum)
+            End If
+
+            Dim numeroCartao As String = mtbFiltroCartao.Text.Replace(" ", "")
+
+            Dim transacoesFiltradas = _transacaoService.GetByFilters(dataTransacao, valorTransacao, statusTransacao, numeroCartao, NudPaginaca.Value, 10)
+            dgvTransacoes.DataSource = transacoesFiltradas
         End If
 
 

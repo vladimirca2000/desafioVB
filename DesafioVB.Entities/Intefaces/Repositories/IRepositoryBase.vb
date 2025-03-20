@@ -1,4 +1,6 @@
-﻿Namespace Interfaces.Repositories
+﻿Imports DesafioVB.Entities.DesafioVB.Entities
+
+Namespace Interfaces.Repositories
     Public Interface IRepositoryBase(Of TEntity)
         Function GetAll() As IEnumerable(Of TEntity)
         Function GetById(id As Integer) As TEntity

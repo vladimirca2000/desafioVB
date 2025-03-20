@@ -93,5 +93,44 @@ Public Class TransacaoRepository
         End Using
     End Function
 
+    Private Function ITransacaoRepository_GetByFilters(dataTransacao As Date?, valorTransacao As Decimal?, statusTransacao As StatusTransacaoEnum?, numeroCartao As String, pagina As Integer, quantidade As Integer) As Object Implements ITransacaoRepository.GetByFilters
+        Using connection As New SqlConnection(_connectionString)
+            Dim statusDaTransacao As String = Nothing
+            If statusTransacao.HasValue Then
+                Dim convert As New NumeroParaTextEnumStatusTransacao
+                statusDaTransacao = convert.GetStatusTransacaoDescricao(statusTransacao.Value)
+            End If
 
+            Dim offset = (pagina - 1) * quantidade
+
+            Dim query As String = "SELECT Id_Transacao as IdTransacao, Numero_Cartao as NumeroCartao, Valor_Transacao as ValorTransacao, Data_Transacao as DataTransacao, Descricao, Status_Transacao as StatusTransacao FROM Transacoes WHERE 1=1"
+            Dim parameters = New DynamicParameters()
+
+            If dataTransacao.HasValue Then
+                query &= " AND Data_Transacao = @DataTransacao"
+                parameters.Add("@DataTransacao", dataTransacao.Value)
+            End If
+
+            If valorTransacao.HasValue Then
+                query &= " AND Valor_Transacao = @ValorTransacao"
+                parameters.Add("@ValorTransacao", valorTransacao.Value)
+            End If
+
+            If statusTransacao.HasValue Then
+                query &= " AND Status_Transacao = @StatusTransacao"
+                parameters.Add("@StatusTransacao", statusDaTransacao)
+            End If
+
+            If Not String.IsNullOrEmpty(numeroCartao) Then
+                query &= " AND Numero_Cartao = @NumeroCartao"
+                parameters.Add("@NumeroCartao", numeroCartao)
+            End If
+
+            query &= " ORDER BY Id_Transacao OFFSET @Offset ROWS FETCH NEXT @Quantidade ROWS ONLY"
+            parameters.Add("@Offset", offset)
+            parameters.Add("@Quantidade", quantidade)
+
+            Return connection.Query(Of Transacao)(query, parameters)
+        End Using
+    End Function
 End Class
