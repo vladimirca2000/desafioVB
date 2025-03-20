@@ -16,9 +16,9 @@ Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     Private ReadOnly _transacaoService As ITransacaoService
-    'Private ReadOnly transacaoRepository As ITransacaoRepository
 
-    'Descartar substituições de formulário para limpar a lista de componentes.
+    Dim LinhasPorPagina As Integer = 50
+
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -677,7 +677,7 @@ Partial Class Form1
     End Sub
 
     Protected Sub AtualizarGrid()
-        Dim transacoes = _transacaoService.GetAllPaginado(NudPaginaca.Value, 10)
+        Dim transacoes = _transacaoService.GetAllPaginado(NudPaginaca.Value, LinhasPorPagina)
         dgvTransacoes.DataSource = transacoes
 
     End Sub
@@ -748,7 +748,7 @@ Partial Class Form1
 
             MsgBox("Nenhum filtro aplicado. Procedendo sem filtros.", MsgBoxStyle.Information, "Informação")
 
-            Dim transacoes = _transacaoService.GetAllPaginado(NudPaginaca.Value, 10)
+            Dim transacoes = _transacaoService.GetAllPaginado(NudPaginaca.Value, 50)
             dgvTransacoes.DataSource = transacoes
             Return
         Else
@@ -777,7 +777,7 @@ Partial Class Form1
 
             Dim numeroCartao As String = mtbFiltroCartao.Text.Replace(" ", "")
 
-            Dim transacoesFiltradas = _transacaoService.GetByFilters(dataTransacao, valorTransacao, statusTransacao, numeroCartao, NudPaginaca.Value, 10)
+            Dim transacoesFiltradas = _transacaoService.GetByFilters(dataTransacao, valorTransacao, statusTransacao, numeroCartao, NudPaginaca.Value, LinhasPorPagina)
             dgvTransacoes.DataSource = transacoesFiltradas
         End If
 
