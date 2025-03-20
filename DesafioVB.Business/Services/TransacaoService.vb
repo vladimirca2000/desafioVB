@@ -25,11 +25,10 @@ Namespace Services
         Public Function GetAll() As IEnumerable(Of Transacao) Implements ITransacaoService.GetAll
             Try
                 _logger.LogInformation("Iniciando a busca de todas as transações.")
-                ' Buscar todas as transações
+
                 Dim transacoes = _transacaoRepository.GetAll()
                 _logger.LogInformation("Busca de todas as transações concluída com sucesso.")
 
-                ' Retornar a lista de transações
                 Return transacoes
             Catch ex As Exception
                 _logger.LogError(ex, "Erro ao buscar todas as transações.")
@@ -47,10 +46,8 @@ Namespace Services
                     Return Nothing
                 End If
 
-                ' Buscar a transação pelo ID
                 Dim transacao = _transacaoRepository.GetById(id)
 
-                ' Se a transação não for encontrada, lança uma exceção
                 If transacao Is Nothing Then
                     _logger.LogInformation("Transação não encontrada.")
                     _notification.Notify("Transação não encontrada.")
@@ -93,14 +90,12 @@ Namespace Services
                 _logger.LogInformation($"Iniciando a atualização da transação com ID {updateTransacao.IdTransacao}.", updateTransacao.IdTransacao)
                 Dim transacaoExistente = _transacaoRepository.GetById(updateTransacao.IdTransacao)
 
-                ' Se a transação não for encontrada, lança uma exceção
                 If transacaoExistente Is Nothing Then
                     _logger.LogInformation("Transação não encontrada.")
                     _notification.Notify("Transação não encontrada.")
                     Exit Sub
                 End If
 
-                ' Se a transação já estiver aprovada, impede a edição
                 If transacaoExistente.StatusTransacao = StatusTransacaoEnum.Aprovada Then
                     _logger.LogInformation("Transações aprovadas não podem ser editadas.")
                     _notification.Notify("Transações aprovadas não podem ser editadas.")
@@ -109,7 +104,6 @@ Namespace Services
 
                 Dim transacao = updateTransacao.Adapt(Of Transacao)()
 
-                ' Chama o repositório para atualizar a transação
                 _transacaoRepository.Update(transacao)
                 _logger.LogInformation($"Atualização da transação com ID {updateTransacao.IdTransacao} concluída com sucesso.", updateTransacao.IdTransacao)
                 _notification.Notify($"Atualização da transação com ID {updateTransacao.IdTransacao} concluída com sucesso.")
@@ -126,21 +120,18 @@ Namespace Services
                 _logger.LogInformation($"Iniciando a exclusão da transação com ID {id}.", id)
                 Dim transacaoExistente = _transacaoRepository.GetById(id)
 
-                ' Se a transação não for encontrada, lança uma exceção
                 If transacaoExistente Is Nothing Then
                     _logger.LogInformation("Transação não encontrada.")
                     _notification.Notify("Transação não encontrada.")
                     Exit Sub
                 End If
 
-                ' Se a transação já estiver aprovada, impede a exclusão
                 If transacaoExistente.StatusTransacao = StatusTransacaoEnum.Aprovada Then
                     _logger.LogInformation("Transações aprovadas não podem ser excluídas.")
                     _notification.Notify("Transações aprovadas não podem ser excluídas.")
                     Exit Sub
                 End If
 
-                ' Chama o repositório para deletar a transação
                 _transacaoRepository.Delete(id)
                 _logger.LogInformation($"Exclusão da transação com ID {id} concluída com sucesso.", id)
                 _logger.LogInformation($"Exclusão da transação com ID {id} concluída com sucesso.")
@@ -169,7 +160,6 @@ Namespace Services
             Try
                 _logger.LogInformation("Iniciando a busca de transações com filtros.")
 
-                ' Chamar o repositório para buscar as transações com os filtros aplicados
                 Dim transacoes = _transacaoRepository.GetByFilters(dataTransacao, valorTransacao, statusTransacao, numeroCartao, pagina, quantidade)
 
                 _logger.LogInformation("Busca de transações com filtros concluída com sucesso.")

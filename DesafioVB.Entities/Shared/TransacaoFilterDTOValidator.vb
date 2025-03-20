@@ -45,29 +45,24 @@ Public Class TransacaoFilterDTOValidator
         Dim statusTransacao As StatusTransacaoEnum?
         Dim numeroCartaoLimpo = LimparEValidarNumeroCartao(cartao)
 
-        ' Validar e converter a data
         If String.IsNullOrEmpty(data) OrElse Not DateTime.TryParse(data, dataTransacao) Then
             dataTransacao = DateTime.MinValue
         End If
 
-        ' Validar e converter o valor
         If Not Decimal.TryParse(valor, valorTransacao) OrElse valorTransacao <= 0 Then
             valorTransacao = 0
         End If
 
-        ' Validar o status
         If [Enum].IsDefined(GetType(StatusTransacaoEnum), status) Then
             statusTransacao = CType([Enum].Parse(GetType(StatusTransacaoEnum), status), StatusTransacaoEnum)
         Else
             statusTransacao = Nothing
         End If
 
-        ' Verificar se todos os filtros são inválidos
         If dataTransacao = DateTime.MinValue AndAlso valorTransacao <= 0 AndAlso String.IsNullOrEmpty(status) AndAlso numeroCartaoLimpo.Length <> 16 Then
             Return Nothing
         End If
 
-        ' Retornar o TransacaoFilterDTO
         Return New TransacaoFilterDTO With {
             .DataTransacao = If(dataTransacao = DateTime.MinValue, Nothing, dataTransacao),
             .ValorTransacao = valorTransacao,

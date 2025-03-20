@@ -4,7 +4,6 @@ Imports DesafioVB.Entities
 
 Public Class TransacaoMapping
     Public Shared Sub Configurar()
-        ' Configuração do mapeamento de Transacao para CreateTransacaoDTO
         TypeAdapterConfig(Of Transacao, InputTransacaoDTO) _
             .NewConfig() _
             .Map(Function(dest) dest.IdTransacao, Function(src) src.IdTransacao) _
@@ -13,7 +12,6 @@ Public Class TransacaoMapping
             .Map(Function(dest) dest.Descricao, Function(src) src.Descricao) _
             .Map(Function(dest) dest.StatusTransacao, Function(src) src.StatusTransacao)
 
-        ' Configuração inversa (CreateTransacaoDTO para Transacao)
         TypeAdapterConfig(Of InputTransacaoDTO, Transacao) _
             .NewConfig() _
             .Map(Function(dest) dest.IdTransacao, Function(src) src.IdTransacao) _

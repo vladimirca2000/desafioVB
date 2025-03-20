@@ -78,9 +78,7 @@ Public Class TransacaoRepository
     Public Function GetAllPaginado(pagina As Integer, quantidade As Integer) As IEnumerable(Of Transacao) Implements ITransacaoRepository.GetAllPaginado
         Using connection As New SqlConnection(_connectionString)
             Dim offset = (pagina - 1) * quantidade
-            'If offset = 0 Then
-            '    offset = quantidade
-            'End If
+
             Dim query = "SELECT 
                              Id_Transacao as IdTransacao
                             ,Numero_Cartao as NumeroCartao

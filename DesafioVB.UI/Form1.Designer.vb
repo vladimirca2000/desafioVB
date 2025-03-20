@@ -8,6 +8,8 @@ Imports DesafioVB.Business.Services
 Imports Microsoft.Extensions.Logging
 Imports DesafioVB.Entities.Interfaces.Repositories
 Imports DesafioVB.Entities
+Imports ClosedXML.Excel
+Imports System.IO
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
@@ -73,6 +75,7 @@ Partial Class Form1
         Label13 = New Label()
         Label14 = New Label()
         Label15 = New Label()
+        btnExportarParaExcel = New Button()
         Panel1.SuspendLayout()
         Panel2.SuspendLayout()
         CType(nudValorTransacao, ComponentModel.ISupportInitialize).BeginInit()
@@ -426,7 +429,7 @@ Partial Class Form1
         BtnBuscarTransacoes.Cursor = Cursors.Hand
         BtnBuscarTransacoes.Font = New Font("Segoe UI", 16.0F)
         BtnBuscarTransacoes.ForeColor = Color.Transparent
-        BtnBuscarTransacoes.Location = New Point(1039, 525)
+        BtnBuscarTransacoes.Location = New Point(930, 529)
         BtnBuscarTransacoes.MaximumSize = New Size(180, 38)
         BtnBuscarTransacoes.MinimumSize = New Size(180, 38)
         BtnBuscarTransacoes.Name = "BtnBuscarTransacoes"
@@ -439,7 +442,7 @@ Partial Class Form1
         ' NudPaginaca
         ' 
         NudPaginaca.Font = New Font("Segoe UI", 16.0F)
-        NudPaginaca.Location = New Point(963, 527)
+        NudPaginaca.Location = New Point(854, 531)
         NudPaginaca.Maximum = New Decimal(New Integer() {9999, 0, 0, 0})
         NudPaginaca.MaximumSize = New Size(70, 0)
         NudPaginaca.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
@@ -454,7 +457,7 @@ Partial Class Form1
         ' 
         Label13.AutoSize = True
         Label13.Font = New Font("Segoe UI", 16.0F)
-        Label13.Location = New Point(847, 529)
+        Label13.Location = New Point(738, 533)
         Label13.Name = "Label13"
         Label13.Size = New Size(110, 30)
         Label13.TabIndex = 23
@@ -478,6 +481,20 @@ Partial Class Form1
         Label15.TabIndex = 25
         Label15.Text = "Filtro"
         ' 
+        ' btnExportarParaExcel
+        ' 
+        btnExportarParaExcel.BackColor = Color.Blue
+        btnExportarParaExcel.Font = New Font("Segoe UI", 16.0F)
+        btnExportarParaExcel.ForeColor = Color.White
+        btnExportarParaExcel.Location = New Point(1139, 529)
+        btnExportarParaExcel.MaximumSize = New Size(80, 38)
+        btnExportarParaExcel.MinimumSize = New Size(80, 38)
+        btnExportarParaExcel.Name = "btnExportarParaExcel"
+        btnExportarParaExcel.Size = New Size(80, 38)
+        btnExportarParaExcel.TabIndex = 26
+        btnExportarParaExcel.Text = "Excel"
+        btnExportarParaExcel.UseVisualStyleBackColor = False
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
@@ -485,6 +502,7 @@ Partial Class Form1
         AutoSize = True
         AutoSizeMode = AutoSizeMode.GrowAndShrink
         ClientSize = New Size(1264, 681)
+        Controls.Add(btnExportarParaExcel)
         Controls.Add(Label15)
         Controls.Add(Label14)
         Controls.Add(Label13)
@@ -522,40 +540,41 @@ Partial Class Form1
         PerformLayout()
     End Sub
 
-    ' Construtor que aceita TransacaoRepository como dependência
+
     Public Sub New(transacaoService As ITransacaoService, logger As ILogger(Of TransacaoService))
-        ' Esta chamada é requerida pelo designer.
+
         InitializeComponent()
 
-
-        ' Adicione qualquer inicialização após a chamada InitializeComponent().
         Dim notification As INotification = New MessageBoxNotification()
         _transacaoService = transacaoService
-        '_transacaoService = New TransacaoService(transacaoRepository, logger, notification)
     End Sub
 
-    ' Exemplo de uso do repositório
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         cmbStatusTransacao.DataSource = StatusTransacaoEnum.GetNames(GetType(StatusTransacaoEnum))
 
-        ' Preencher o ComboBox cmbFiltroStatus com os nomes dos enums
+
         cmbFiltroStatus.Items.Clear()
-        cmbFiltroStatus.Items.Add("") ' Adicionar item vazio
+        cmbFiltroStatus.Items.Add("")
         cmbFiltroStatus.Items.AddRange([Enum].GetNames(GetType(StatusTransacaoEnum)))
-        cmbFiltroStatus.SelectedIndex = 0 ' Deixar o item vazio selecionado
+        cmbFiltroStatus.SelectedIndex = 0
 
         AtualizarGrid()
 
-        'Obter lista de transações com paginação e preencher o grid
-        'Dim transacoes = _transacaoService.GetAllPaginado(NudPaginaca.Value, 10)
-        'dgvTransacoes.DataSource = transacoes
 
-        ' Ocultar a coluna IdTransacao
+
         dgvTransacoes.Columns("IdTransacao").Visible = False
 
+        dgvTransacoes.Columns("ValorTransacao").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
 
-        ' Faça algo com as transações
+
+        dgvTransacoes.Columns("IdTransacao").HeaderText = "Transação"
+        dgvTransacoes.Columns("NumeroCartao").HeaderText = "Número do Cartão"
+        dgvTransacoes.Columns("StatusTransacao").HeaderText = "Status"
+        dgvTransacoes.Columns("ValorTransacao").HeaderText = "Valor da Transação"
+        dgvTransacoes.Columns("Descricao").HeaderText = "Descrição"
+        dgvTransacoes.Columns("DataTransacao").HeaderText = "Data Transação"
     End Sub
 
     Friend WithEvents Panel1 As Panel
@@ -593,8 +612,6 @@ Partial Class Form1
 
     Private Sub btnSalvar_Click(sender As Object, e As EventArgs) Handles btnSalvar.Click
 
-        'instanciar os DTOs de create e update
-
         If String.IsNullOrEmpty(TxtIdTransacao.Text) Then
             ' Adicionar nova transação
             Dim numeroCartaoSemEspacos = mtbNumeroCartao.Text.Replace(" ", "")
@@ -618,12 +635,9 @@ Partial Class Form1
 
             _transacaoService.Add(createTransacao)
 
-            'MsgBox("Transação adicionada com sucesso!", MsgBoxStyle.Information, "Sucesso")
-
             LimparCampos()
             AtualizarGrid()
         Else
-            ' Atualizar transação existente
             Dim numeroCartaoSemEspacos = mtbNumeroCartao.Text.Replace(" ", "")
             Dim statusTransacaoEnum As StatusTransacaoEnum = CType([Enum].Parse(GetType(StatusTransacaoEnum), cmbStatusTransacao.Text), StatusTransacaoEnum)
             Dim updateTransacao As New InputTransacaoDTO With {
@@ -646,7 +660,6 @@ Partial Class Form1
 
             _transacaoService.Update(updateTransacao)
 
-            'MsgBox("Transação atualizada com sucesso!", MsgBoxStyle.Information, "Sucesso")
             LimparCampos()
             AtualizarGrid()
         End If
@@ -732,14 +745,14 @@ Partial Class Form1
         Dim transacaoFiltro = validator.ValidarFiltros(mtbFiltroData.Text, nudFiltroValor.Value.ToString(), cmbFiltroStatus.Text, mtbFiltroCartao.Text)
 
         If transacaoFiltro Is Nothing Then
-            ' Proceder sem filtros
+
             MsgBox("Nenhum filtro aplicado. Procedendo sem filtros.", MsgBoxStyle.Information, "Informação")
-            ' Adicione a lógica para buscar todas as transações sem filtros
+
             Dim transacoes = _transacaoService.GetAllPaginado(NudPaginaca.Value, 10)
             dgvTransacoes.DataSource = transacoes
             Return
         Else
-            ' Proceder com filtros
+
             Dim dataTransacao As DateTime? = Nothing
             If Not String.IsNullOrWhiteSpace(mtbFiltroData.Text) AndAlso mtbFiltroData.Text <> "  /  /" Then
                 If DateTime.TryParseExact(mtbFiltroData.Text, "dd/MM/yyyy", Nothing, Globalization.DateTimeStyles.None, Nothing) Then
@@ -774,5 +787,47 @@ Partial Class Form1
 
     End Sub
 
+    Friend WithEvents btnExportarParaExcel As Button
 
+    Private Sub btnExportarParaExcel_Click(sender As Object, e As EventArgs) Handles btnExportarParaExcel.Click
+        Dim caminhoPasta As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Dim nomeArquivo As String = "transacoes" & DateTime.Now.ToString("_yyyy-MM-dd_HHmm") & ".xlsx"
+        Dim caminhoArquivo As String = Path.Combine(caminhoPasta, nomeArquivo)
+        ExportarDataGridViewParaExcel(Me.dgvTransacoes, caminhoArquivo)
+        MessageBox.Show("Exportação concluída com sucesso!", "Exportar para Excel", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
+
+
+
+    Public Sub ExportarDataGridViewParaExcel(dataGridView As DataGridView, caminhoArquivo As String)
+        Dim workbook As New XLWorkbook()
+        Dim worksheet = workbook.Worksheets.Add("Transacoes")
+
+
+        For col As Integer = 0 To dataGridView.Columns.Count - 1
+            worksheet.Cell(1, col + 1).Value = dataGridView.Columns(col).HeaderText
+        Next
+
+        For row As Integer = 0 To dataGridView.Rows.Count - 1
+            For col As Integer = 0 To dataGridView.Columns.Count - 1
+                Dim cellValue = dataGridView.Rows(row).Cells(col).Value
+                If cellValue IsNot Nothing Then
+                    If dataGridView.Columns(col).HeaderText = "Valor da Transação" Then
+                        worksheet.Cell(row + 2, col + 1).Value = Convert.ToDecimal(cellValue)
+                        worksheet.Cell(row + 2, col + 1).Style.NumberFormat.Format = "#,##0.00"
+                    ElseIf dataGridView.Columns(col).HeaderText = "Data Transação" Then
+                        worksheet.Cell(row + 2, col + 1).Value = Convert.ToDateTime(cellValue)
+                        worksheet.Cell(row + 2, col + 1).Style.DateFormat.Format = "dd/MM/yyyy"
+                    Else
+                        worksheet.Cell(row + 2, col + 1).Value = cellValue.ToString()
+                    End If
+                End If
+            Next
+        Next
+
+
+        Using stream As New FileStream(caminhoArquivo, FileMode.Create, FileAccess.Write)
+            workbook.SaveAs(stream)
+        End Using
+    End Sub
 End Class
